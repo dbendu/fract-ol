@@ -3,7 +3,7 @@
 
 # ifdef __unix__
 
-#  define WIDTH				1800
+#  define WIDTH				1000
 #  define HEIGHT			1000
 
 #  define ESC			65307
@@ -38,7 +38,7 @@
 
 # else
 
-// #  define WIDTH			2500
+// #  define WIDTH		2500
 // #  define HEIGHT		1350
 #  define WIDTH			1000
 #  define HEIGHT		1000

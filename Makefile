@@ -20,6 +20,7 @@ endif
 
 $(NAME): $(OBJS)
 	make -C libft
+	make -C minilibx
 ifeq ($(SYSTEM), Darwin)
 	$(CC) $(FLAGS) $(FLAGS_MLX_MAC) *.o -o $(NAME) -L minilibx -lmlx -framework OpenCL -L libft -lft
 endif

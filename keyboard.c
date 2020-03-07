@@ -6,7 +6,7 @@
 
 int				key_press(int button, t_data *data)
 {
-	// printf("%d\n", button);
+	printf("%d\n", button);
 	if (button == ESC)
 		exit(0);
 	else if (button == RIGHT)
@@ -21,9 +21,9 @@ int				key_press(int button, t_data *data)
 		data->camera.zoom *= 1.2;
 	else if (button == MINUS)
 		data->camera.zoom /= 1.2;
-	else if (button == NUM_MINUS && data->iters > 0)
+	else if (button == S && data->iters > 0)
 		--data->iters;
-	else if (button == NUM_PLUS)
+	else if (button == W)
 		++data->iters;
 	else if (button == SPACE)
 	{
