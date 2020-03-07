@@ -3,7 +3,6 @@
 #include "fractol.h"
 #include "mlx_defines.h"
 #include "mlx.h"
-#include "complex.h"
 
 static void		setup_args(t_data *data)
 {
@@ -34,8 +33,8 @@ void			draw(t_data *data)
 	clEnqueueReadBuffer(data->cldata->command_queue, data->cldata->buf, CL_TRUE, 0, data->width * data->height * 4, data->wnd.img, 0, NULL, NULL);
 	mlx_put_image_to_window(data->wnd.mlxptr, data->wnd.wndptr, data->wnd.imgptr, 0, 0);
 	char str[5];
-	ft_itoa(data->iters, str, 10, 0);
-	mlx_string_put(data->wnd.mlxptr, data->wnd.wndptr, 10, 50, 0xFFFFFF, str);
+	ft_memitoa(data->iters, str, 10, 0);
+	mlx_string_put(data->wnd.mlxptr, data->wnd.wndptr, 10, 50, 0xFF0000, str);
 }
 
 

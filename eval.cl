@@ -1,21 +1,8 @@
-//#include <stdio.h>
-
 typedef struct		s_complex
 {
 	double		re;
 	double		im;
 }					t_complex;
-
-//int				setup_color(int iter, int iters)
-//{
-//	int color = 0;
-//	float t = (float)iter / iters;
-//
-//	color += (int)(9 * (1 - t) * t * t * t * 255) << 16;
-//	color += (int)(15 * (1 - t) * (1 - t) * t * t * 255) << 8;
-//	color += (int)(8.5 * (1 - t) * (1 - t) * (1 - t) * t * 255);
-//	return (color);
-//}
 
 int setup_color(int iter, int iters)
 {
