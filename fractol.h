@@ -4,6 +4,8 @@
 #include "libft.h"
 #include "opencl.h"
 
+# define ZOOM			1.2
+
 typedef struct			s_wnd
 {
 	void				*mlxptr;
