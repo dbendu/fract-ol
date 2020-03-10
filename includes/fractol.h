@@ -29,6 +29,7 @@ typedef struct			s_mouse
 	int					x;
 	int					y;
 	t_bool				is_left_button_active;
+	t_bool				is_right_button_active;
 }						t_mouse;
 
 typedef struct			s_data
@@ -37,9 +38,10 @@ typedef struct			s_data
 	t_camera			camera;
 	t_mouse				mouse;
 	t_cldata			*cldata;
-	int					width;
-	int					height;
 	int					iters;
+	int					fractol_type;
+	double				julia_re;
+	double				julia_im;
 }						t_data;
 
 void			draw(t_data *data);

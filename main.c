@@ -4,6 +4,7 @@
 #include "fractol.h"
 #include "mlx.h"
 #include "mlx_defines.h"
+#include "fractols_list.h"
 
 t_data	data_create(void)
 {
@@ -15,16 +16,14 @@ t_data	data_create(void)
 	data.wnd.imgptr = mlx_new_image(data.wnd.mlxptr, WIDTH, HEIGHT);
 	data.wnd.img = (int*)mlx_get_data_addr(data.wnd.imgptr, &data.wnd.bytes,
 									&data.wnd.size_line, &data.wnd.endian);
-	data.wnd.bytes /= 8;
 	data.camera.x = 0;
 	data.camera.y = 0;
 	data.camera.zoom = 100;
 	data.iters = 50;
-	data.mouse.x = WIDTH / 2;
-	data.mouse.y = HEIGHT / 2;
-	data.width = WIDTH;
-	data.height = HEIGHT;
 	data.cldata = opencl_init();
+	data.fractol_type = MANDELBROT;
+	data.julia_re = -0.4;
+	data.julia_im = 0.6;
 	return (data);
 }
 

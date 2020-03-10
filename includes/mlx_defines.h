@@ -36,6 +36,10 @@
 
 #  define TAB			65289
 
+#  define LESS			(44)
+#  define MORE			(46)
+
+
 # else
 
 // #  define WIDTH		2500

@@ -2,6 +2,7 @@
 
 #include "fractol.h"
 #include "mlx_defines.h"
+#include "fractols_list.h"
 
 static void		zoom(int x, int y, t_data *data, int direction)
 {
@@ -20,7 +21,7 @@ static void		zoom(int x, int y, t_data *data, int direction)
 		data->camera.x = temp_x * ZOOM - temp_x + data->camera.x;
 		data->camera.y = temp_y - temp_y * ZOOM + data->camera.y;
 	}
-	
+
 }
 
 int				mouse_press(int button, int x, int y, t_data *data)
@@ -43,6 +44,8 @@ int				mouse_press(int button, int x, int y, t_data *data)
 		data->mouse.x = x;
 		data->mouse.y = y;
 	}
+	else if (button == RIGHT_BUTTON)
+		data->mouse.is_right_button_active = TRUE;
 	if (button != LEFT_BUTTON)
 		draw(data);
 	return (1);
@@ -52,6 +55,8 @@ int				mouse_release(int button, int x, int y, t_data *data)
 {
 	if (button == LEFT_BUTTON)
 		data->mouse.is_left_button_active = FALSE;
+	else if (button == RIGHT_BUTTON)
+		data->mouse.is_right_button_active = FALSE;
 	(void)x;
 	(void)y;
 	return (1);
@@ -66,6 +71,11 @@ int				mouse_move(int x, int y, t_data *data)
 		data->camera.y += (y - data->mouse.y) / data->camera.zoom;
 		data->mouse.x = x;
 		data->mouse.y = y;
+	}
+	else if (data->fractol_type == JULIA && data->mouse.is_right_button_active)
+	{
+		data->julia_re = 4 * ((double)x / WIDTH - 0.5);
+		data->julia_im = 4 * ((double)(HEIGHT - y) / HEIGHT - 0.5);
 	}
 	draw(data);
 	return (1);

@@ -3,10 +3,38 @@
 
 #include "fractol.h"
 #include "mlx_defines.h"
+#include "fractols_list.h"
+
+static void		change_fractol(t_data *data, int button)
+{
+	if (button == MORE)
+	{
+		if (data->fractol_type == LAST_FRACTOL)
+			data->fractol_type = FIRST_FRACTOL;
+		else
+			++data->fractol_type;
+	}
+	else
+	{
+		if (data->fractol_type == FIRST_FRACTOL)
+			data->fractol_type = LAST_FRACTOL;
+		else
+			--data->fractol_type;
+	}
+}
+
+static void		reset(t_data *data)
+{
+	data->iters = 50;
+	data->camera.x = 0;
+	data->camera.y = 0;
+	data->camera.zoom = 140;
+	data->mouse.x = WIDTH / 2;
+	data->mouse.y = HEIGHT / 2;
+}
 
 int				key_press(int button, t_data *data)
 {
-	printf("%d\n", button);
 	if (button == ESC)
 		exit(0);
 	else if (button == RIGHT)
@@ -26,13 +54,11 @@ int				key_press(int button, t_data *data)
 	else if (button == W)
 		++data->iters;
 	else if (button == SPACE)
+		reset(data);
+	else if (button == MORE || button == LESS)
 	{
-		data->iters = 50;
-		data->camera.x = 0;
-		data->camera.y = 0;
-		data->camera.zoom = 140;
-		data->mouse.x = WIDTH / 2;
-		data->mouse.y = HEIGHT / 2;
+		change_fractol(data, button);
+		reset(data);
 	}
 	draw(data);
 	return (0);
