@@ -5,6 +5,7 @@
 #include "mlx.h"
 #include "mlx_defines.h"
 #include "fractols_list.h"
+#include "color_schemes.h"
 
 t_data	data_create(void)
 {
@@ -24,6 +25,8 @@ t_data	data_create(void)
 	data.fractol_type = MANDELBROT;
 	data.julia_re = -0.4;
 	data.julia_im = 0.6;
+	data.pixels = WIDTH * HEIGHT;
+	data.color_scheme = BGR;
 	return (data);
 }
 

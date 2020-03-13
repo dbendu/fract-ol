@@ -7,7 +7,7 @@
 #include "mlx_defines.h"
 #include "libft.h"
 
-#define MAX_SOURCE_SIZE	10000
+#define MAX_SOURCE_SIZE	100000
 
 static void			cl_exit(char *msg)
 {
@@ -57,7 +57,8 @@ static char			*opencl_read_kernel_from_file(void)
 static void				opencl_compile_kernel(t_cldata *cldata, char *source)
 {
 	cl_int				ret;
-	size_t				error_msg_len;
+	char				*info;
+	size_t				info_len;
 
 	cldata->program = clCreateProgramWithSource(cldata->context, 1,
 		(const char**)&source, NULL, &ret);
@@ -67,11 +68,12 @@ static void				opencl_compile_kernel(t_cldata *cldata, char *source)
 		"-I includes", NULL, NULL);
 	if (ret)
 	{
-		char buf[10000];
-		clGetProgramBuildInfo(cldata->program, cldata->device_id,
-				CL_PROGRAM_BUILD_LOG, MAX_SOURCE_SIZE, &buf, &error_msg_len);
-		write(1, buf, error_msg_len);
+		info = malloc(MAX_SOURCE_SIZE);
+		clGetProgramBuildInfo(cldata->program, cldata->device_id, CL_PROGRAM_BUILD_LOG,
+								MAX_SOURCE_SIZE, info, &info_len);
+		write(1, info, info_len);
 		write(1, "\n", 1);
+		free(info);
 		cl_exit("Can\'t build program");
 	}
 	cldata->kernel = clCreateKernel(cldata->program, "eval", &ret);
@@ -103,6 +105,6 @@ t_cldata				*opencl_init(void)
 	opencl_compile_kernel(cldata, kernel_src);
 	free(kernel_src);
 	opencl_create_buf(cldata);
-	cldata->threads = 200;
+	cldata->work_size = 200;
 	return (cldata);
 }

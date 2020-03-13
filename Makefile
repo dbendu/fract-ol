@@ -2,11 +2,17 @@ NAME =				fractol
 
 SRCS =				draw.c		keyboard.c		main.c		mouse.c		opencl.c
 
-FLAGS =				-g -Wall -Wextra -Werror -Iincludes -I libft/includes -I minilibx
+FLAGS =				-g -Wall -Wextra -Werror -Iincludes -I libft/includes -I $(MLX_DIR)
 FLAGS_MLX_MAC =		-framework AppKit -framework OpenGL -framework OpenCL
 FLAGS_MLX_LIN =		-lX11 -lXext -lm -lX11 -lXext -lOpenCL
 FLAGS_MAKE =		--no-print-directory
 FLAGS_LINK =		-L libft -lft -L minilibx -lmlx
+ifeq ($(SYSTEM), Darwin)
+	MLX_DIR = mlx/mlx_linux
+endif
+ifeq ($(SYSTEM), Linux)
+	MLX_DIR = mlx/mlx_macos
+endif
 
 OBJS =	$(SRCS:.c=.o)
 
@@ -21,8 +27,8 @@ ifeq ($(SYSTEM), Linux)
 endif
 
 $(NAME): $(OBJS)
-	@make -C libft $(FLAGS_MAKE)
-	@make -C minilibx $(FLAGS_MAKE)
+	make -C libft $(FLAGS_MAKE)
+	make -C $(MLX_DIR) $(FLAGS_MAKE)
 ifeq ($(SYSTEM), Darwin)
 	$(CC) $(FLAGS) *.o -o $(NAME) $(FLAGS_LINK) $(FLAGS_MLX_MAC)
 endif

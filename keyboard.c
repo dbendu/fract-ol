@@ -4,6 +4,7 @@
 #include "fractol.h"
 #include "mlx_defines.h"
 #include "fractols_list.h"
+#include "color_schemes.h"
 
 static void		change_fractol(t_data *data, int button)
 {
@@ -33,6 +34,14 @@ static void		reset(t_data *data)
 	data->mouse.y = HEIGHT / 2;
 }
 
+static void		change_color_scheme(t_data *data)
+{
+	if (data->color_scheme == LAST_COLOR_SCHEME)
+		data->color_scheme = FIRST_COLOR_SCHEME;
+	else
+		data->color_scheme += 1;
+}
+
 int				key_press(int button, t_data *data)
 {
 	if (button == ESC)
@@ -60,6 +69,8 @@ int				key_press(int button, t_data *data)
 		change_fractol(data, button);
 		reset(data);
 	}
+	else if (button == I)
+		change_color_scheme(data);
 	draw(data);
 	return (0);
 }

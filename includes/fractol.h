@@ -21,7 +21,7 @@ typedef struct			s_camera
 {
 	double				x;
 	double				y;
-	float				zoom;
+	double				zoom;
 }						t_camera;
 
 typedef struct			s_mouse
@@ -42,6 +42,8 @@ typedef struct			s_data
 	int					fractol_type;
 	double				julia_re;
 	double				julia_im;
+	size_t				pixels;
+	int					color_scheme;
 }						t_data;
 
 void			draw(t_data *data);

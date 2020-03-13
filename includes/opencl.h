@@ -13,7 +13,6 @@
 
 typedef struct			s_cldata
 {
-	int					threads;
 	cl_uint				num_platforms;
 	cl_device_id		device_id;
 	cl_uint				num_devices;
@@ -23,6 +22,7 @@ typedef struct			s_cldata
 	cl_program			program;
 	cl_kernel			kernel;
 	cl_mem				buf;
+	size_t				work_size;
 }						t_cldata;
 
 t_cldata				*opencl_init(void);
