@@ -1,24 +1,34 @@
-#include <stdio.h>
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   draw.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: dbendu <dbendu@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/03/14 16:26:53 by dbendu            #+#    #+#             */
+/*   Updated: 2020/03/14 21:03:03 by dbendu           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "fractol.h"
 #include "mlx_defines.h"
 #include "mlx.h"
 #include "fractols_list.h"
 
-static void		setup_args(t_data *data)
+static void		setup_args(t_data *data, cl_kernel kernel)
 {
 	cl_int		ret;
 
 	ret = 0;
-	ret |= clSetKernelArg(data->cldata->kernel, 0, sizeof(cl_mem), &data->cldata->buf);
-	ret |= clSetKernelArg(data->cldata->kernel, 1, sizeof(double), &data->camera.x);
-	ret |= clSetKernelArg(data->cldata->kernel, 2, sizeof(double), &data->camera.y);
-	ret |= clSetKernelArg(data->cldata->kernel, 3, sizeof(double), &data->camera.zoom);
-	ret |= clSetKernelArg(data->cldata->kernel, 4, sizeof(int), &data->iters);
-	ret |= clSetKernelArg(data->cldata->kernel, 5, sizeof(int), &data->fractol_type);
-	ret |= clSetKernelArg(data->cldata->kernel, 6, sizeof(double), &data->julia_re);
-	ret |= clSetKernelArg(data->cldata->kernel, 7, sizeof(double), &data->julia_im);
-	ret |= clSetKernelArg(data->cldata->kernel, 8, sizeof(int), &data->color_scheme);
+	ret |= clSetKernelArg(kernel, 0, sizeof(cl_mem), &data->cldata->buf);
+	ret |= clSetKernelArg(kernel, 1, sizeof(double), &data->camera.x);
+	ret |= clSetKernelArg(kernel, 2, sizeof(double), &data->camera.y);
+	ret |= clSetKernelArg(kernel, 3, sizeof(double), &data->camera.zoom);
+	ret |= clSetKernelArg(kernel, 4, sizeof(int), &data->iters);
+	ret |= clSetKernelArg(kernel, 5, sizeof(int), &data->fractol_type);
+	ret |= clSetKernelArg(kernel, 6, sizeof(double), &data->julia_re);
+	ret |= clSetKernelArg(kernel, 7, sizeof(double), &data->julia_im);
+	ret |= clSetKernelArg(kernel, 8, sizeof(int), &data->color_scheme);
 	if (ret != CL_SUCCESS)
 		ft_assert(0, "Can\'t set args");
 }
@@ -56,11 +66,13 @@ static void		read_buffer(t_data *data)
 
 void			draw(t_data *data)
 {
-	setup_args(data);
+	char		str[20];
+
+	setup_args(data, data->cldata->kernel);
 	execute(data);
 	read_buffer(data);
-	mlx_put_image_to_window(data->wnd.mlxptr, data->wnd.wndptr, data->wnd.imgptr, 0, 0);
-	char str[20];
+	mlx_put_image_to_window(data->wnd.mlxptr, data->wnd.wndptr,
+							data->wnd.imgptr, 0, 0);
 	ft_memitoa(data->iters, str, 10, 0);
 	mlx_string_put(data->wnd.mlxptr, data->wnd.wndptr, 10, 50, 0xFF0000, str);
 	if (data->fractol_type == MANDELBROT)
@@ -69,7 +81,11 @@ void			draw(t_data *data)
 		ft_memcpy(str, "MANDELBAR", 10);
 	else if (data->fractol_type == JULIA)
 		ft_memcpy(str, "JULIA", 6);
+	else if (data->fractol_type == SPIDER)
+		ft_memcpy(str, "SPIDER", 7);
 	else if (data->fractol_type == NEWTON)
 		ft_memcpy(str, "NEWTON", 7);
+	else if (data->fractol_type == BURNING_SHIP)
+		ft_memcpy(str, "BURNING SHIP", 13);
 	mlx_string_put(data->wnd.mlxptr, data->wnd.wndptr, 10, 100, 0xFF0000, str);
 }

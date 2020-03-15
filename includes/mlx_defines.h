@@ -3,8 +3,8 @@
 
 # ifdef __unix__
 
-#  define WIDTH				1000
-#  define HEIGHT			1000
+#  define WIDTH			1000
+#  define HEIGHT		1000
 
 #  define ESC			65307
 
@@ -81,14 +81,15 @@
 #  define NUM_PLUS		69
 #  define NUM_MINUS		78
 
+#  define MORE			(47)
+#  define LESS			(43)
+
 # endif
 
 # define MAX_X				(WIDTH - 1)
 # define MAX_Y				(HEIGHT - 1)
-# define COMPLEX_CENTER_X	(WIDTH / 2)
-# define COMPLEX_CENTER_Y	(HEIGHT / 2)
 
-# define __WHITE		16777215
-# define __BLACK		0
+# define __WHITE		0xFFFFFF
+# define __BLACK		0x0
 
 #endif

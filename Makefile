@@ -6,13 +6,8 @@ FLAGS =				-g -Wall -Wextra -Werror -Iincludes -I libft/includes -I $(MLX_DIR)
 FLAGS_MLX_MAC =		-framework AppKit -framework OpenGL -framework OpenCL
 FLAGS_MLX_LIN =		-lX11 -lXext -lm -lX11 -lXext -lOpenCL
 FLAGS_MAKE =		--no-print-directory
-FLAGS_LINK =		-L libft -lft -L minilibx -lmlx
-ifeq ($(SYSTEM), Darwin)
-	MLX_DIR = mlx/mlx_linux
-endif
-ifeq ($(SYSTEM), Linux)
-	MLX_DIR = mlx/mlx_macos
-endif
+MLX_DIR =			mlx/mlx_linux
+FLAGS_LINK =		-L libft -lft -L $(MLX_DIR) -lmlx
 
 OBJS =	$(SRCS:.c=.o)
 

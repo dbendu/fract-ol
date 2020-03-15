@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   opencl.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: dbendu <dbendu@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/03/14 21:04:20 by dbendu            #+#    #+#             */
+/*   Updated: 2020/03/14 21:06:14 by dbendu           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <unistd.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -9,14 +21,14 @@
 
 #define MAX_SOURCE_SIZE	100000
 
-static void			cl_exit(char *msg)
+static void				cl_exit(char *msg)
 {
 	write(1, msg, ft_strlen(msg));
 	write(1, "\n", 1);
 	exit(0);
 }
 
-static void			opencl_create_infrastruct(t_cldata *cldata)
+static void				opencl_create_infrastruct(t_cldata *cldata)
 {
 	cl_int			ret;
 
@@ -38,7 +50,7 @@ static void			opencl_create_infrastruct(t_cldata *cldata)
 		cl_exit("Can\'t create command queue");
 }
 
-static char			*opencl_read_kernel_from_file(void)
+static char				*opencl_read_kernel_from_file(void)
 {
 	char			*source_str;
 	int				fd;
@@ -69,8 +81,8 @@ static void				opencl_compile_kernel(t_cldata *cldata, char *source)
 	if (ret)
 	{
 		info = malloc(MAX_SOURCE_SIZE);
-		clGetProgramBuildInfo(cldata->program, cldata->device_id, CL_PROGRAM_BUILD_LOG,
-								MAX_SOURCE_SIZE, info, &info_len);
+		clGetProgramBuildInfo(cldata->program, cldata->device_id,
+				CL_PROGRAM_BUILD_LOG, MAX_SOURCE_SIZE, info, &info_len);
 		write(1, info, info_len);
 		write(1, "\n", 1);
 		free(info);
@@ -81,22 +93,11 @@ static void				opencl_compile_kernel(t_cldata *cldata, char *source)
 		cl_exit("Can\'t create kernel");
 }
 
-static void				opencl_create_buf(t_cldata *cldata)
-{
-	cl_int				ret;
-
-	/* создать буфер */
-	cldata->buf = clCreateBuffer(cldata->context, CL_MEM_WRITE_ONLY,
-								WIDTH * HEIGHT * sizeof(int), NULL,
-								&ret);
-	if (ret)
-		cl_exit("Can\'t create buffer");
-}
-
 t_cldata				*opencl_init(void)
 {
 	t_cldata		*cldata;
 	char			*kernel_src;
+	cl_int			ret;
 
 	cldata = malloc(sizeof(t_cldata));
 	ft_assert(cldata != NULL, "Can\'t allocate cldata");
@@ -104,7 +105,11 @@ t_cldata				*opencl_init(void)
 	kernel_src = opencl_read_kernel_from_file();
 	opencl_compile_kernel(cldata, kernel_src);
 	free(kernel_src);
-	opencl_create_buf(cldata);
+	cldata->buf = clCreateBuffer(cldata->context, CL_MEM_WRITE_ONLY,
+								WIDTH * HEIGHT * sizeof(int), NULL,
+								&ret);
+	if (ret)
+		cl_exit("Can\'t create buffer");
 	cldata->work_size = 200;
 	return (cldata);
 }

@@ -1,5 +1,14 @@
-#include <stdio.h>
-#include <stdlib.h>
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   keyboard.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: dbendu <dbendu@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/03/14 21:03:35 by dbendu            #+#    #+#             */
+/*   Updated: 2020/03/14 21:04:07 by dbendu           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "fractol.h"
 #include "mlx_defines.h"
@@ -22,16 +31,7 @@ static void		change_fractol(t_data *data, int button)
 		else
 			--data->fractol_type;
 	}
-}
-
-static void		reset(t_data *data)
-{
-	data->iters = 50;
-	data->camera.x = 0;
-	data->camera.y = 0;
-	data->camera.zoom = 140;
-	data->mouse.x = WIDTH / 2;
-	data->mouse.y = HEIGHT / 2;
+	reset(data);
 }
 
 static void		change_color_scheme(t_data *data)
@@ -65,10 +65,7 @@ int				key_press(int button, t_data *data)
 	else if (button == SPACE)
 		reset(data);
 	else if (button == MORE || button == LESS)
-	{
 		change_fractol(data, button);
-		reset(data);
-	}
 	else if (button == I)
 		change_color_scheme(data);
 	draw(data);

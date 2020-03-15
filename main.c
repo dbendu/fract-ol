@@ -1,5 +1,14 @@
-#include <math.h>
-#include <stdio.h>
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: dbendu <dbendu@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/03/14 16:26:19 by dbendu            #+#    #+#             */
+/*   Updated: 2020/03/15 00:05:56 by dbendu           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "fractol.h"
 #include "mlx.h"
@@ -7,7 +16,17 @@
 #include "fractols_list.h"
 #include "color_schemes.h"
 
-t_data	data_create(void)
+void			reset(t_data *data)
+{
+	data->iters = 50;
+	data->camera.x = 0;
+	data->camera.y = 0;
+	data->camera.zoom = 140;
+	data->mouse.x = WIDTH / 2;
+	data->mouse.y = HEIGHT / 2;
+}
+
+t_data			data_create(void)
 {
 	t_data data;
 
@@ -17,33 +36,26 @@ t_data	data_create(void)
 	data.wnd.imgptr = mlx_new_image(data.wnd.mlxptr, WIDTH, HEIGHT);
 	data.wnd.img = (int*)mlx_get_data_addr(data.wnd.imgptr, &data.wnd.bytes,
 									&data.wnd.size_line, &data.wnd.endian);
-	data.camera.x = 0;
-	data.camera.y = 0;
-	data.camera.zoom = 100;
-	data.iters = 50;
 	data.cldata = opencl_init();
 	data.fractol_type = MANDELBROT;
-	data.julia_re = -0.4;
-	data.julia_im = 0.6;
+	data.julia_re = -0.488;
+	data.julia_im = 0.596;
 	data.pixels = WIDTH * HEIGHT;
 	data.color_scheme = BGR;
+	reset(&data);
 	return (data);
 }
 
-int main(void)
+int				main(void)
 {
 	t_data		data;
 
 	data = data_create();
-
 	draw(&data);
-
 	mlx_hook(data.wnd.wndptr, 2, 1L << 0, key_press, &data);
 	mlx_hook(data.wnd.wndptr, 4, 1L << 2, mouse_press, &data);
 	mlx_hook(data.wnd.wndptr, 5, 1L << 3, mouse_release, &data);
 	mlx_hook(data.wnd.wndptr, 6, 1L << 13, mouse_move, &data);
-
 	mlx_loop(data.wnd.mlxptr);
-
 	return (0);
 }

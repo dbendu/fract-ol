@@ -8,9 +8,10 @@
 # define GBR					(5)
 # define BGR					(6)
 # define BRG					(7)
+# define GRAY					(8)
 
 # define FIRST_COLOR_SCHEME		(1)
-# define LAST_COLOR_SCHEME		(7)
+# define LAST_COLOR_SCHEME		(8)
 
 # define BLACK					(0x0)
 # define WHITE					(0xFFFFFF)
