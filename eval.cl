@@ -15,14 +15,6 @@ typedef struct			s_complex
 	double			im;
 }						t_complex;
 
-t_complex		complex_add(const t_complex *c1, const t_complex *c2)
-{
-	t_complex	res;
-
-	res.re = c1->re + c2->re;
-	res.im = c1->im + c2->im;
-	return (res);
-}
 
 t_complex		complex_div(const t_complex *c1, const t_complex *c2)
 {
@@ -381,8 +373,9 @@ static int 		setup_color(int iter, int max_iters, int color_scheme)
 									KERNEL
 *******************************************************************************/
 
-__kernel void	eval(__global int *data, double x_offset, double y_offset, double zoom, int max_iters, int fractol_type,
-																double julia_re, double julia_im, int color_scheme)
+__kernel void	eval(__global int *data, double x_offset, double y_offset,
+					double zoom, int max_iters, int fractol_type,
+					double julia_re, double julia_im, int color_scheme)
 {
 	int				id;
 	int				iter;

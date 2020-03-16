@@ -6,10 +6,10 @@
 /*   By: dbendu <dbendu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/14 21:05:30 by dbendu            #+#    #+#             */
-/*   Updated: 2020/03/14 21:05:44 by dbendu           ###   ########.fr       */
+/*   Updated: 2020/03/16 22:14:03 by dbendu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
- #include <stdio.h>
+
 #include "fractol.h"
 #include "mlx_defines.h"
 #include "fractols_list.h"
@@ -84,7 +84,6 @@ int				mouse_move(int x, int y, t_data *data)
 	{
 		data->julia_re = 4 * ((double)x / WIDTH - 0.5);
 		data->julia_im = 4 * ((double)(HEIGHT - y) / HEIGHT - 0.5);
-	printf("%f - %f\n", data->julia_re, data->julia_im);
 	}
 	draw(data);
 	return (1);

@@ -6,7 +6,7 @@
 /*   By: dbendu <dbendu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/14 21:04:20 by dbendu            #+#    #+#             */
-/*   Updated: 2020/03/14 21:06:14 by dbendu           ###   ########.fr       */
+/*   Updated: 2020/03/16 22:10:17 by dbendu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ static void				opencl_create_infrastruct(t_cldata *cldata)
 		&ret);
 	if (ret)
 		cl_exit("Can\'t create context");
-	cldata->command_queue = clCreateCommandQueueWithProperties(cldata->context,
+	cldata->command_queue = clCreateCommandQueue(cldata->context,
 		cldata->device_id, 0, &ret);
 	if (ret)
 		cl_exit("Can\'t create command queue");

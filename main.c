@@ -6,7 +6,7 @@
 /*   By: dbendu <dbendu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/14 16:26:19 by dbendu            #+#    #+#             */
-/*   Updated: 2020/03/15 00:05:56 by dbendu           ###   ########.fr       */
+/*   Updated: 2020/03/16 22:28:55 by dbendu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,18 @@
 #include "mlx_defines.h"
 #include "fractols_list.h"
 #include "color_schemes.h"
+
+void			fractol_exit(t_data *data)
+{
+	mlx_destroy_image(data->wnd.mlxptr, data->wnd.imgptr);
+	mlx_destroy_window(data->wnd.mlxptr, data->wnd.wndptr);
+	clReleaseContext(data->cldata->context);
+	clReleaseCommandQueue(data->cldata->command_queue);
+	clReleaseProgram(data->cldata->program);
+	clReleaseKernel(data->cldata->kernel);
+	clReleaseMemObject(data->cldata->buf);
+	exit(0);
+}
 
 void			reset(t_data *data)
 {

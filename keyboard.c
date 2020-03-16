@@ -6,7 +6,7 @@
 /*   By: dbendu <dbendu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/14 21:03:35 by dbendu            #+#    #+#             */
-/*   Updated: 2020/03/14 21:04:07 by dbendu           ###   ########.fr       */
+/*   Updated: 2020/03/16 22:14:54 by dbendu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,10 +42,24 @@ static void		change_color_scheme(t_data *data)
 		data->color_scheme += 1;
 }
 
+static void		key_press_1(int button, t_data *data)
+{
+	if (button == S && data->iters > 0)
+		--data->iters;
+	else if (button == W)
+		++data->iters;
+	else if (button == SPACE)
+		reset(data);
+	else if (button == MORE || button == LESS)
+		change_fractol(data, button);
+	else if (button == I)
+		change_color_scheme(data);
+}
+
 int				key_press(int button, t_data *data)
 {
 	if (button == ESC)
-		exit(0);
+		fractol_exit(data);
 	else if (button == RIGHT)
 		data->camera.x -= 10 / data->camera.zoom;
 	else if (button == LEFT)
@@ -58,16 +72,8 @@ int				key_press(int button, t_data *data)
 		data->camera.zoom *= 1.2;
 	else if (button == MINUS)
 		data->camera.zoom /= 1.2;
-	else if (button == S && data->iters > 0)
-		--data->iters;
-	else if (button == W)
-		++data->iters;
-	else if (button == SPACE)
-		reset(data);
-	else if (button == MORE || button == LESS)
-		change_fractol(data, button);
-	else if (button == I)
-		change_color_scheme(data);
+	else
+		key_press_1(button, data);
 	draw(data);
 	return (0);
 }

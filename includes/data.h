@@ -6,7 +6,7 @@
 /*   By: dbendu <dbendu@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/14 16:31:21 by dbendu            #+#    #+#             */
-/*   Updated: 2020/03/14 16:39:28 by dbendu           ###   ########.fr       */
+/*   Updated: 2020/03/16 22:16:04 by dbendu           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 # define ZOOM			1.2
 
-#include "opencl.h"
+# include "opencl.h"
 
 typedef struct			s_wnd
 {

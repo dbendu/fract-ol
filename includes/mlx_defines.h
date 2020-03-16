@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   mlx_defines.h                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: dbendu <dbendu@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/03/16 22:15:23 by dbendu            #+#    #+#             */
+/*   Updated: 2020/03/16 22:15:36 by dbendu           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef MLX_DEFINES_H
 # define MLX_DEFINES_H
 
@@ -39,11 +51,8 @@
 #  define LESS			(44)
 #  define MORE			(46)
 
-
 # else
 
-// #  define WIDTH		2500
-// #  define HEIGHT		1350
 #  define WIDTH			1000
 #  define HEIGHT		1000
 

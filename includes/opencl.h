@@ -1,6 +1,19 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   opencl.h                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: dbendu <dbendu@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/03/16 22:16:12 by dbendu            #+#    #+#             */
+/*   Updated: 2020/03/16 22:16:15 by dbendu           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef OPENCL_H
 # define OPENCL_H
 
+# define CL_USE_DEPRECATED_OPENCL_1_2_APIS
 # define CL_TARGET_OPENCL_VERSION 220
 # ifdef __APPLE__
 #  include <OpenCL/opencl.h>
