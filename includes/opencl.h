@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   opencl.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dbendu <dbendu@student.42.fr>              +#+  +:+       +#+        */
+/*   By: user <user@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/16 22:16:12 by dbendu            #+#    #+#             */
-/*   Updated: 2020/03/16 22:16:15 by dbendu           ###   ########.fr       */
+/*   Updated: 2020/04/06 11:31:34 by user             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
 # endif
 
 # define KERNEL_NAME "eval"
-# define KERNEL_FILE "eval.cl"
+# define KERNEL_FILE "srcs/eval.cl"
 
 typedef struct			s_cldata
 {

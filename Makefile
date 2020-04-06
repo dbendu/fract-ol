@@ -1,58 +1,59 @@
 NAME =				fractol
 
-SRCS =				draw.c		keyboard.c		main.c		mouse.c		opencl.c
+SRCS =				main.c				\
+					draw.c				\
+					mouse.c				\
+					opencl.c			\
+					keyboard.c
 
-MLX_LUNIX_DIR =		mlx/mlx_linux
-MLX_MACOS_DIR =		mlx/mlx_macos
-FLAGS_LINUX =		-g -Wall -Wextra -Werror -Iincludes -I libft/includes -I $(MLX_LINUX_DIR)
-FLAGS_MACOS =		-g -Wall -Wextra -Werror -Iincludes -I libft/includes -I $(MLX_MACOS_DIR)
-FLAGS_MLX_MAC =		-framework AppKit -framework OpenGL -framework OpenCL
-FLAGS_MLX_LIN =		-lX11 -lXext -lm -lX11 -lXext -lOpenCL
-FLAGS_LINUX_LINK =	-L libft -lft -L $(MLX_LINUX_DIR) -lmlx
-FLAGS_MACOS_LINK =	-L libft -lft -L $(MLX_MACOS_DIR) -lmlx
-FLAGS_MAKE =		--no-print-directory
+SRCS_DIR =			srcs
 
-OBJS =	$(SRCS:.c=.o)
+OBJS_DIR =			objs
 
-SYSTEM = $(shell uname -s)
+INCLUDES_DIRS =		includes			\
+					libft/includes		\
+					mlx/mlx_linux
 
-%.o: %.c
-ifeq ($(SYSTEM), Darwin)
-	$(CC) $(FLAGS_MACOS) -o $@ -c $<
-endif
-ifeq ($(SYSTEM), Linux)
-	@$(CC) $(FLAGS_LINUX) -o $@ -c $<
-endif
+INCLUDES =			$(addprefix -I, $(INCLUDES_DIRS))
 
-$(NAME): $(OBJS)
-	make -C libft $(FLAGS_MAKE)
-#compile mlx
-ifeq ($(SYSTEM), Darwin)
-	make -C $(MLX_MACOS_DIR) $(FLAGS_MAKE)
-endif
-ifeq ($(SYSTEM), Linux)
-	make -C $(MLX_LINUX_DIR) $(FLAGS_MAKE)
-endif
-#end compile mlx
-ifeq ($(SYSTEM), Darwin)
-	$(CC) $(FLAGS_MACOS) *.o -o $(NAME) $(FLAGS_MACOS_LINK) $(FLAGS_MLX_MAC)
-endif
-ifeq ($(SYSTEM), Linux)
-	$(CC) $(FLAGS_LINUX) *.o -o $(NAME) $(FLAGS_LINUX_LINK) $(FLAGS_MLX_LIN)
-endif
+OBJS =				$(addprefix $(OBJS_DIR)/, $(SRCS:.c=.o))
+
+FLAGS =				-Wall -Werror -Wextra -O2 -Wno-unused-result
+LINK_FLAGS =		-L libft -lft -L mlx/mlx_linux -lmlx -lOpenCL
+MLX_FLAGS =			-lX11 -lXext
+
 
 all: $(NAME)
 
+
+$(OBJS_DIR)/%.o: $(SRCS_DIR)/%.c
+	@gcc $(FLAGS) $(INCLUDES) -o $@ -c $<
+
+$(OBJS_DIR):
+	@mkdir -p $(OBJS_DIR)
+
+$(NAME): $(OBJS_DIR) $(OBJS)
+	@make -C libft
+	@make -C mlx/mlx_linux
+	@gcc $(FLAGS) $(OBJS) $(LINK_FLAGS) $(MLX_FLAGS) -o $(NAME)
+
+
 clean:
-	@rm -f *.o
-	@make c -C libft $(FLAGS_MAKE)
+	@rm -rf $(OBJS_DIR)
+	@make clean -C libft
+	@make clean -C mlx/mlx_linux
 
 fclean: clean
-	@make f -C libft $(FLAGS_MAKE)
 	@rm -f $(NAME)
+	@make fclean -C libft
 
 re: fclean all
 
 c: clean
 
 f: fclean
+
+.PHONY: all clean fclean re c f
+
+d:
+	gcc srcs/*.c $(INCLUDES) -ggdb -g3 -pg -O0 -I libft/includes -I mlx/mlx_linux -I includes libft/libft.a mlx/mlx_linux/libmlx.a -lX11 -lXext -lOpenCL

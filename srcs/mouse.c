@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mouse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dbendu <dbendu@student.42.fr>              +#+  +:+       +#+        */
+/*   By: user <user@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/14 21:05:30 by dbendu            #+#    #+#             */
-/*   Updated: 2020/03/16 22:14:03 by dbendu           ###   ########.fr       */
+/*   Updated: 2020/04/06 13:19:09 by user             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,5 +86,6 @@ int				mouse_move(int x, int y, t_data *data)
 		data->julia_im = 4 * ((double)(HEIGHT - y) / HEIGHT - 0.5);
 	}
 	draw(data);
+	mlx_do_sync(data->wnd.mlxptr);
 	return (1);
 }

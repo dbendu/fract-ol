@@ -3,16 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   draw.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dbendu <dbendu@student.42.fr>              +#+  +:+       +#+        */
+/*   By: user <user@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/14 16:26:53 by dbendu            #+#    #+#             */
-/*   Updated: 2020/03/14 21:03:03 by dbendu           ###   ########.fr       */
+/*   Updated: 2020/04/06 13:19:21 by user             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fractol.h"
 #include "mlx_defines.h"
-#include "mlx.h"
 #include "fractols_list.h"
 
 static void		setup_args(t_data *data, cl_kernel kernel)

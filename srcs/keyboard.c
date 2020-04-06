@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   keyboard.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dbendu <dbendu@student.42.fr>              +#+  +:+       +#+        */
+/*   By: user <user@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/14 21:03:35 by dbendu            #+#    #+#             */
-/*   Updated: 2020/03/16 22:14:54 by dbendu           ###   ########.fr       */
+/*   Updated: 2020/04/06 13:21:05 by user             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,8 @@ static void		key_press_1(int button, t_data *data)
 		change_fractol(data, button);
 	else if (button == I)
 		change_color_scheme(data);
+	if (button == S || button == W)
+		mlx_do_sync(data->wnd.mlxptr);
 }
 
 int				key_press(int button, t_data *data)
