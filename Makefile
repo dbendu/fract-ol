@@ -4,23 +4,24 @@ SRCS =				main.c				\
 					draw.c				\
 					mouse.c				\
 					opencl.c			\
-					keyboard.c
+					keyboard.c			\
+					init_data.c			\
+					quit.c				\
+					reset_fractol.c
 
 SRCS_DIR =			srcs
 
 OBJS_DIR =			objs
 
 INCLUDES_DIRS =		includes			\
-					libft/includes		\
-					mlx/mlx_linux
+					libft/includes
 
 INCLUDES =			$(addprefix -I, $(INCLUDES_DIRS))
 
 OBJS =				$(addprefix $(OBJS_DIR)/, $(SRCS:.c=.o))
 
-FLAGS =				-Wall -Werror -Wextra -O2 -Wno-unused-result
-LINK_FLAGS =		-L libft -lft -L mlx/mlx_linux -lmlx -lOpenCL
-MLX_FLAGS =			-lX11 -lXext
+FLAGS =				-Wall -Werror -Wextra -g
+LINK_FLAGS =		-L libft -lft -lOpenCL -lSDL2
 
 
 all: $(NAME)
@@ -34,14 +35,12 @@ $(OBJS_DIR):
 
 $(NAME): $(OBJS_DIR) $(OBJS)
 	@make -C libft
-	@make -C mlx/mlx_linux
-	@gcc $(FLAGS) $(OBJS) $(LINK_FLAGS) $(MLX_FLAGS) -o $(NAME)
+	@gcc $(FLAGS) $(OBJS) $(LINK_FLAGS) -o $(NAME)
 
 
 clean:
 	@rm -rf $(OBJS_DIR)
 	@make clean -C libft
-	@make clean -C mlx/mlx_linux
 
 fclean: clean
 	@rm -f $(NAME)
@@ -54,6 +53,3 @@ c: clean
 f: fclean
 
 .PHONY: all clean fclean re c f
-
-d:
-	gcc srcs/*.c $(INCLUDES) -ggdb -g3 -pg -O0 -I libft/includes -I mlx/mlx_linux -I includes libft/libft.a mlx/mlx_linux/libmlx.a -lX11 -lXext -lOpenCL

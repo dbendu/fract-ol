@@ -1,4 +1,3 @@
-#include "mlx_defines.h"
 #include "fractols_list.h"
 #include "color_schemes.h"
 
@@ -97,8 +96,8 @@ static int		mandelbrot(int x, int y, int max_iters,
 	t_complex	c;
 	t_complex	temp;
 
-	c.re = (x - WIDTH / 2) / zoom + x_offset;
-	c.im = (HEIGHT / 2 - y) / zoom + y_offset;
+	c.re = (x - 1000 / 2) / zoom + x_offset;
+	c.im = (1000 / 2 - y) / zoom + y_offset;
 	point = c;
 	iter = 0;
 	while (iter < max_iters)
@@ -139,8 +138,8 @@ static int		mandelbar(int x, int y, int max_iters,
 	t_complex	c;
 	t_complex	temp;
 
-	c.re = (x - WIDTH / 2) / zoom + x_offset;
-	c.im = (HEIGHT / 2 - y) / zoom + y_offset;
+	c.re = (x - 1000 / 2) / zoom + x_offset;
+	c.im = (1000 / 2 - y) / zoom + y_offset;
 	point = c;
 	iter = 0;
 	while (iter < max_iters)
@@ -182,8 +181,8 @@ static int		julia(int x, int y, int max_iters,
 	t_complex	c;
 	t_complex	temp;
 
-	c.re = (x - WIDTH / 2) / zoom + x_offset;
-	c.im = (HEIGHT / 2 - y) / zoom + y_offset;
+	c.re = (x - 1000 / 2) / zoom + x_offset;
+	c.im = (1000 / 2 - y) / zoom + y_offset;
 	point = c;
 	iter = 0;
 	while (iter < max_iters)
@@ -227,8 +226,8 @@ static int		spider(int x, int y, int max_iters,
 	t_complex	temp;
 
 
-	c.re = (x - WIDTH / 2) / zoom + x_offset;
-	c.im = (HEIGHT / 2 - y) / zoom + y_offset;
+	c.re = (x - 1000 / 2) / zoom + x_offset;
+	c.im = (1000 / 2 - y) / zoom + y_offset;
 	point = c;
 	iter = 0;
 	while (iter < max_iters)
@@ -273,8 +272,8 @@ static int		newton(int x, int y, int max_iters,
 	roots[0] = complex_init(1, 0);
 	roots[1] = complex_init(-0.5, 0.86602540378);
 	roots[2] = complex_init(-0.5, -0.86602540378);
-	point.re = (x - WIDTH / 2) / zoom + x_offset;
-	point.im = (HEIGHT / 2 - y) / zoom + y_offset;
+	point.re = (x - 1000 / 2) / zoom + x_offset;
+	point.im = (1000 / 2 - y) / zoom + y_offset;
 	iter = 0;
 	while (iter < max_iters)
 	{
@@ -312,8 +311,8 @@ static int		burning_ship(int x, int y, int max_iters,
 	t_complex	c;
 	t_complex	temp;
 
-	c.re = (x - WIDTH / 2) / zoom + x_offset;
-	c.im = (HEIGHT / 2 - y) / zoom + y_offset;
+	c.re = (x - 1000 / 2) / zoom + x_offset;
+	c.im = (1000 / 2 - y) / zoom + y_offset;
 	point = c;
 	iter = 0;
 	while (iter < max_iters)
@@ -383,8 +382,8 @@ __kernel void	eval(__global int *data, double x_offset, double y_offset,
 	int				y;
 
 	id = get_global_id(0);
-	x = id / HEIGHT;
-	y = id % HEIGHT;
+	x = id / 1000;
+	y = id % 1000;
 
 	switch (fractol_type)
 	{
@@ -407,5 +406,5 @@ __kernel void	eval(__global int *data, double x_offset, double y_offset,
 		iter = burning_ship(x, y, max_iters, x_offset, y_offset, zoom);
 		break ;
 	}
-	data[y * WIDTH + x] = setup_color(iter, max_iters, color_scheme);
+	data[y * 1000 + x] = setup_color(iter, max_iters, color_scheme);
 }

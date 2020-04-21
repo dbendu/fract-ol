@@ -6,7 +6,7 @@
 /*   By: user <user@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/14 21:04:20 by dbendu            #+#    #+#             */
-/*   Updated: 2020/04/06 12:10:29 by user             ###   ########.fr       */
+/*   Updated: 2020/04/21 23:00:51 by user             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,20 +14,20 @@
 #include <stdlib.h>
 #include <fcntl.h>
 
+#include "fractol.h"
 #include "libft.h"
 #include "opencl.h"
-#include "mlx_defines.h"
 
 #define MAX_SOURCE_SIZE	100000
 
-static void				cl_exit(char *msg)
+static void		cl_exit(const char *msg)
 {
 	write(1, msg, ft_strlen(msg));
 	write(1, "\n", 1);
 	exit(0);
 }
 
-static void				opencl_create_infrastruct(t_cldata *cldata)
+static void		opencl_create_infrastruct(t_cldata *cldata)
 {
 	cl_int			ret;
 
@@ -45,7 +45,7 @@ static void				opencl_create_infrastruct(t_cldata *cldata)
 	ft_assert(ret == CL_SUCCESS, "Can\'t create command queue");
 }
 
-static char				*opencl_read_kernel_from_file(void)
+static char		*opencl_read_kernel_from_file(void)
 {
 	char			*source_str;
 	int				fd;
@@ -60,7 +60,7 @@ static char				*opencl_read_kernel_from_file(void)
 	return (source_str);
 }
 
-static void				opencl_compile_kernel(t_cldata *cldata, char *source)
+static void		opencl_compile_kernel(t_cldata *cldata, char *source)
 {
 	cl_int				ret;
 	char				*info;
@@ -85,7 +85,7 @@ static void				opencl_compile_kernel(t_cldata *cldata, char *source)
 	ft_assert(ret == CL_SUCCESS, "Can\'t create kernel");
 }
 
-t_cldata				*opencl_init(void)
+t_cldata		*opencl_init(void)
 {
 	t_cldata		*cldata;
 	char			*kernel_src;

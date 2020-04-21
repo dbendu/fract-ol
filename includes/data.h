@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   data.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dbendu <dbendu@student.42.fr>              +#+  +:+       +#+        */
+/*   By: user <user@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/14 16:31:21 by dbendu            #+#    #+#             */
-/*   Updated: 2020/03/16 22:16:04 by dbendu           ###   ########.fr       */
+/*   Updated: 2020/04/21 21:16:53 by user             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,13 +19,8 @@
 
 typedef struct			s_wnd
 {
-	void				*mlxptr;
-	void				*wndptr;
-	void				*imgptr;
-	int					*img;
-	int					bytes;
-	int					size_line;
-	int					endian;
+	SDL_Window			*window;
+	SDL_Surface			*wnd_surface;
 }						t_wnd;
 
 typedef struct			s_camera

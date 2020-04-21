@@ -6,12 +6,11 @@
 /*   By: user <user@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/14 16:26:53 by dbendu            #+#    #+#             */
-/*   Updated: 2020/04/06 13:19:21 by user             ###   ########.fr       */
+/*   Updated: 2020/04/21 23:10:40 by user             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fractol.h"
-#include "mlx_defines.h"
 #include "fractols_list.h"
 
 static void		setup_args(t_data *data, cl_kernel kernel)
@@ -28,8 +27,7 @@ static void		setup_args(t_data *data, cl_kernel kernel)
 	ret |= clSetKernelArg(kernel, 6, sizeof(double), &data->julia_re);
 	ret |= clSetKernelArg(kernel, 7, sizeof(double), &data->julia_im);
 	ret |= clSetKernelArg(kernel, 8, sizeof(int), &data->color_scheme);
-	if (ret != CL_SUCCESS)
-		ft_assert(0, "Can\'t set args");
+	ft_assert(ret == CL_SUCCESS, "Can\'t set args");
 }
 
 static void		execute(t_data *data)
@@ -57,7 +55,8 @@ static void		read_buffer(t_data *data)
 	cl_int		ret;
 
 	ret = clEnqueueReadBuffer(data->cldata->command_queue, data->cldata->buf,
-				CL_TRUE, 0, data->pixels * 4, data->wnd.img, 0, NULL, NULL);
+				CL_TRUE, 0, data->pixels * 4,
+				data->wnd.wnd_surface->pixels, 0, NULL, NULL);
 	if (ret)
 		ft_error("can\'t read data from buffer to mlx surface",
 				"draw/read_buffer", 0);
@@ -65,26 +64,8 @@ static void		read_buffer(t_data *data)
 
 void			draw(t_data *data)
 {
-	char		str[20];
-
 	setup_args(data, data->cldata->kernel);
 	execute(data);
 	read_buffer(data);
-	mlx_put_image_to_window(data->wnd.mlxptr, data->wnd.wndptr,
-							data->wnd.imgptr, 0, 0);
-	ft_memitoa(data->iters, str, 10, 0);
-	mlx_string_put(data->wnd.mlxptr, data->wnd.wndptr, 10, 50, 0xFF0000, str);
-	if (data->fractol_type == MANDELBROT)
-		ft_memcpy(str, "MANDELBROT", 11);
-	else if (data->fractol_type == MANDELBAR)
-		ft_memcpy(str, "MANDELBAR", 10);
-	else if (data->fractol_type == JULIA)
-		ft_memcpy(str, "JULIA", 6);
-	else if (data->fractol_type == SPIDER)
-		ft_memcpy(str, "SPIDER", 7);
-	else if (data->fractol_type == NEWTON)
-		ft_memcpy(str, "NEWTON", 7);
-	else if (data->fractol_type == BURNING_SHIP)
-		ft_memcpy(str, "BURNING SHIP", 13);
-	mlx_string_put(data->wnd.mlxptr, data->wnd.wndptr, 10, 100, 0xFF0000, str);
+	SDL_UpdateWindowSurface(data->wnd.window);
 }
