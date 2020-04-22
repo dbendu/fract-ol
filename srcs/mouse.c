@@ -6,7 +6,7 @@
 /*   By: user <user@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/14 21:05:30 by dbendu            #+#    #+#             */
-/*   Updated: 2020/04/21 23:08:58 by user             ###   ########.fr       */
+/*   Updated: 2020/04/22 12:20:35 by user             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,9 @@ void			mouse_move(t_data *data, int x, int y)
 		data->julia_re = 4 * ((double)x / WIDTH - 0.5);
 		data->julia_im = 4 * ((double)(HEIGHT - y) / HEIGHT - 0.5);
 	}
-	draw(data);
+	if (data->mouse.is_left_button_active ||
+		(data->mouse.is_right_button_active && data->fractol_type == JULIA))
+		draw(data);
 	SDL_FlushEvent(SDL_MOUSEMOTION);
 }
 
